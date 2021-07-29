@@ -1,0 +1,39 @@
+{
+  "plugins": [ "prettier" ],
+  "extends": [ "airbnb-typescript/base", "prettier" ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { "project": "./tsconfig.json" },
+  "settings": {
+    "import/resolver": { "typescript": { "alwaysTryTypes": true } }
+  },
+  "rules": {
+    "prettier/prettier": ["warn", {
+      "trailingComma": "all",
+      "singleQuote": true,
+      "printWidth": 120,
+      "arrowParens": "avoid", // Allow single argument without parentheses in arrow functions
+      "semi": false
+    }],
+    "import/no-anonymous-default-export": 0, // Allow "export default"
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/setupTests.ts", "**/*.test.js", "**/*.spec.js"]}],
+    "import/order": ["warn", {
+      "groups": [
+        "external", // node_modules
+        "internal", // src folder
+        ["parent", "sibling"]
+      ],
+      "newlines-between": "always" // Separate all groups with new line
+      }],
+      "no-plusplus": 0,
+      "consistent-return": 0, // returning value is not required in arrow functions
+      "no-nested-ternary": 0,
+      "@typescript-eslint/indent": 0,
+      "@typescript-eslint/comma-dangle": 0,
+      "@typescript-eslint/no-shadow": 0, // Allow using same variable name in outer and function scopes
+      "@typescript-eslint/no-unused-vars": ["warn", {
+        "vars": "local",
+        "args": "after-used",
+        "ignoreRestSiblings": true
+      }]
+  }
+}
