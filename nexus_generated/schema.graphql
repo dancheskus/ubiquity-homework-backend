@@ -12,4 +12,10 @@ type Post {
 type Query {
   hello(name: String): String!
   posts: [Post!]!
+  user(id: String): User
+  users: [User!]!
+}
+
+type User {
+  id: String
 }

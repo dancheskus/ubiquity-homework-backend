@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client'
 import { v4 as uuidv4 } from 'uuid'
 
+import { prisma } from './prismaSetup'
 import { server } from './server'
-
-const prisma = new PrismaClient()
 
 const createNewUser = async () => {
   try {
@@ -16,7 +14,7 @@ const createNewUser = async () => {
   }
 }
 
-createNewUser()
+// createNewUser()
 
 server.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`)
