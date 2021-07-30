@@ -2,18 +2,6 @@ import { mutationField, nonNull, objectType } from 'nexus'
 
 import { prisma } from '../prismaSetup'
 
-export const TodoItem = objectType({
-  name: 'TodoItem',
-  definition: t => {
-    t.nonNull.string('id')
-    t.nonNull.string('title')
-    t.string('description')
-    t.float('cost')
-    t.nonNull.boolean('isCompleted')
-    t.nonNull.string('todoListId')
-  },
-})
-
 export const TodoList = objectType({
   name: 'TodoList',
   definition: t => {

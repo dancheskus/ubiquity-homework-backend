@@ -1,3 +1,4 @@
 export * from './User'
 export * from './Workspace'
-export * from './Todo'
+export * from './TodoList'
+export * from './TodoItem'

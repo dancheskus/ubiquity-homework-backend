@@ -21,7 +21,7 @@ model TodoItem {
   id          String   @id @default(uuid()) @db.Uuid
   title       String
   description String?
-  cost        Float?
+  cost        Int?
   isCompleted Boolean  @default(false)
   todoList    TodoList @relation(fields: [todoListId], references: [id], onDelete: Cascade)
   todoListId  String   @db.Uuid

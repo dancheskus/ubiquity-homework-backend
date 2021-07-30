@@ -3,12 +3,16 @@
 
 
 type Mutation {
+  createTodoItem(cost: Int, description: String, title: String!, todoListId: String!): TodoItem
   createTodoList(title: String, workspaceId: String!): TodoList
   createUser: User
   createWorkspace(title: String!): Workspace
+  deleteTodoItem(id: String!): TodoItem
   deleteTodoList(id: String!): TodoList
   deleteWorkspace(id: String!): Workspace
+  updateTodoItem(cost: Int, description: String, id: String!, isCompleted: Boolean, title: String): TodoItem
   updateTodoList(id: String!, isLocked: Boolean, title: String): TodoList
+  updateWorkspace(id: String!, isShared: Boolean, title: String): Workspace
 }
 
 type Query {
@@ -17,7 +21,7 @@ type Query {
 }
 
 type TodoItem {
-  cost: Float
+  cost: Int
   description: String
   id: String!
   isCompleted: Boolean!

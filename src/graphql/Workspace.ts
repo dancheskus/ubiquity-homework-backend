@@ -27,3 +27,10 @@ export const DeleteWorkspaceMutation = mutationField('deleteWorkspace', {
   args: { id: nonNull('String') },
   resolve: (_, { id }) => prisma.workspace.delete({ where: { id } }),
 })
+
+export const UpdateWorkspaceMutation = mutationField('updateWorkspace', {
+  type: 'Workspace',
+  args: { id: nonNull('String'), isShared: 'Boolean', title: 'String' },
+  resolve: (_, { id, isShared, title }) =>
+    prisma.workspace.update({ where: { id }, data: { isShared: isShared ?? undefined, title: title ?? undefined } }),
+})

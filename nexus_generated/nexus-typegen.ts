@@ -31,7 +31,7 @@ export interface NexusGenObjects {
   Mutation: {};
   Query: {};
   TodoItem: { // root type
-    cost?: number | null; // Float
+    cost?: number | null; // Int
     description?: string | null; // String
     id: string; // String!
     isCompleted: boolean; // Boolean!
@@ -67,19 +67,23 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
+    createTodoItem: NexusGenRootTypes['TodoItem'] | null; // TodoItem
     createTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
     createUser: NexusGenRootTypes['User'] | null; // User
     createWorkspace: NexusGenRootTypes['Workspace'] | null; // Workspace
+    deleteTodoItem: NexusGenRootTypes['TodoItem'] | null; // TodoItem
     deleteTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
     deleteWorkspace: NexusGenRootTypes['Workspace'] | null; // Workspace
+    updateTodoItem: NexusGenRootTypes['TodoItem'] | null; // TodoItem
     updateTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
+    updateWorkspace: NexusGenRootTypes['Workspace'] | null; // Workspace
   }
   Query: { // field return type
     user: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
   TodoItem: { // field return type
-    cost: number | null; // Float
+    cost: number | null; // Int
     description: string | null; // String
     id: string; // String!
     isCompleted: boolean; // Boolean!
@@ -107,19 +111,23 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
+    createTodoItem: 'TodoItem'
     createTodoList: 'TodoList'
     createUser: 'User'
     createWorkspace: 'Workspace'
+    deleteTodoItem: 'TodoItem'
     deleteTodoList: 'TodoList'
     deleteWorkspace: 'Workspace'
+    updateTodoItem: 'TodoItem'
     updateTodoList: 'TodoList'
+    updateWorkspace: 'Workspace'
   }
   Query: { // field return type name
     user: 'User'
     users: 'User'
   }
   TodoItem: { // field return type name
-    cost: 'Float'
+    cost: 'Int'
     description: 'String'
     id: 'String'
     isCompleted: 'Boolean'
@@ -147,6 +155,12 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createTodoItem: { // args
+      cost?: number | null; // Int
+      description?: string | null; // String
+      title: string; // String!
+      todoListId: string; // String!
+    }
     createTodoList: { // args
       title?: string | null; // String
       workspaceId: string; // String!
@@ -154,15 +168,30 @@ export interface NexusGenArgTypes {
     createWorkspace: { // args
       title: string; // String!
     }
+    deleteTodoItem: { // args
+      id: string; // String!
+    }
     deleteTodoList: { // args
       id: string; // String!
     }
     deleteWorkspace: { // args
       id: string; // String!
     }
+    updateTodoItem: { // args
+      cost?: number | null; // Int
+      description?: string | null; // String
+      id: string; // String!
+      isCompleted?: boolean | null; // Boolean
+      title?: string | null; // String
+    }
     updateTodoList: { // args
       id: string; // String!
       isLocked?: boolean | null; // Boolean
+      title?: string | null; // String
+    }
+    updateWorkspace: { // args
+      id: string; // String!
+      isShared?: boolean | null; // Boolean
       title?: string | null; // String
     }
   }
