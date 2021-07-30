@@ -4,7 +4,7 @@
   "main": "index.ts",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src",
+    "start": "ts-node-dev --transpile-only --no-notify src",
     "lint": "eslint --ext .js,.ts src --color",
     "fix": "yarn lint --fix"
   },
@@ -18,11 +18,11 @@
     "eslint-plugin-prettier": "^3.4.0",
     "prettier": "^2.3.2",
     "ts-node-dev": "^1.1.8",
-    "tsconfig-paths": "^3.10.1",
     "typescript": "^4.3.5"
   },
   "dependencies": {
     "apollo-server": "^3.0.2",
-    "graphql": "^15.5.1"
+    "graphql": "^15.5.1",
+    "nexus": "^1.1.0"
   }
 }
