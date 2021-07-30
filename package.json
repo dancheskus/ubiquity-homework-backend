@@ -5,6 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node-dev --transpile-only --no-notify src",
+    "prisma:migrate": "npx prisma migrate dev --name init",
+    "prisma:web": "npx prisma studio",
     "lint": "eslint --ext .js,.ts src --color",
     "fix": "yarn lint --fix"
   },

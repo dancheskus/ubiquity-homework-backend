@@ -8,6 +8,10 @@ const createPath = (fileName: string) => join(__dirname, '../nexus_generated', f
 
 export const schema = makeSchema({
   types,
+  contextType: {
+    module: require.resolve('./context'),
+    export: 'Context',
+  },
   outputs: {
     typegen: createPath('nexus-typegen.ts'),
     schema: createPath('schema.graphql'),

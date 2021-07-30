@@ -10,9 +10,9 @@ generator client {
 model TodoList {
   id          String     @id @default(uuid()) @db.Uuid
   title       String?
-  locked      Boolean
+  isLocked    Boolean    @default(false)
   todoItems   TodoItem[]
-  workspace   WorkSpace  @relation(fields: [workspaceId], references: [id])
+  workspace   Workspace  @relation(fields: [workspaceId], references: [id])
   workspaceId String     @db.Uuid
 }
 
@@ -21,15 +21,15 @@ model TodoItem {
   title       String
   description String?
   cost        Float?
-  completed   Boolean
+  isCompleted Boolean  @default(false)
   todoList    TodoList @relation(fields: [todoListId], references: [id])
   todoListId  String   @db.Uuid
 }
 
-model WorkSpace {
+model Workspace {
   id        String     @id @default(uuid()) @db.Uuid
   title     String
-  shared    Boolean
+  isShared  Boolean    @default(false)
   owner     User       @relation(fields: [ownerId], references: [id])
   ownerId   String     @db.Uuid
   todoLists TodoList[]
@@ -37,5 +37,5 @@ model WorkSpace {
 
 model User {
   id         String      @id @db.Uuid
-  workSpaces WorkSpace[]
+  workspaces Workspace[]
 }

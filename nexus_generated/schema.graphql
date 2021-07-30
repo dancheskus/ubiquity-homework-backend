@@ -2,20 +2,41 @@
 ### Do not make changes to this file directly
 
 
-type Post {
-  body: String
-  id: Int
-  published: Boolean
-  title: String
+type Mutation {
+  createUser: User
+  createWorkspace(title: String!): Workspace
 }
 
 type Query {
-  hello(name: String): String!
-  posts: [Post!]!
-  user(id: String): User
+  user(id: String!): User
   users: [User!]!
+}
+
+type TodoItem {
+  cost: Float
+  description: String
+  id: String!
+  isCompleted: Boolean!
+  title: String!
+  todoListId: String!
+}
+
+type TodoList {
+  id: String!
+  isLocked: Boolean!
+  title: String
+  todoItems: [TodoItem]!
+  workspaceId: String!
 }
 
 type User {
   id: String
+}
+
+type Workspace {
+  id: String!
+  isShared: Boolean!
+  ownerId: String!
+  title: String!
+  todoLists: [TodoList]!
 }

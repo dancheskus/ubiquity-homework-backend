@@ -4,7 +4,7 @@
  */
 
 
-
+import type { Context } from "./../src/context"
 
 
 
@@ -28,15 +28,30 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  Post: { // root type
-    body?: string | null; // String
-    id?: number | null; // Int
-    published?: boolean | null; // Boolean
-    title?: string | null; // String
-  }
+  Mutation: {};
   Query: {};
+  TodoItem: { // root type
+    cost?: number | null; // Float
+    description?: string | null; // String
+    id: string; // String!
+    isCompleted: boolean; // Boolean!
+    title: string; // String!
+    todoListId: string; // String!
+  }
+  TodoList: { // root type
+    id: string; // String!
+    isLocked: boolean; // Boolean!
+    title?: string | null; // String
+    workspaceId: string; // String!
+  }
   User: { // root type
     id?: string | null; // String
+  }
+  Workspace: { // root type
+    id: string; // String!
+    isShared: boolean; // Boolean!
+    ownerId: string; // String!
+    title: string; // String!
   }
 }
 
@@ -51,48 +66,86 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
-  Post: { // field return type
-    body: string | null; // String
-    id: number | null; // Int
-    published: boolean | null; // Boolean
-    title: string | null; // String
+  Mutation: { // field return type
+    createUser: NexusGenRootTypes['User'] | null; // User
+    createWorkspace: NexusGenRootTypes['Workspace'] | null; // Workspace
   }
   Query: { // field return type
-    hello: string; // String!
-    posts: NexusGenRootTypes['Post'][]; // [Post!]!
     user: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['User'][]; // [User!]!
+  }
+  TodoItem: { // field return type
+    cost: number | null; // Float
+    description: string | null; // String
+    id: string; // String!
+    isCompleted: boolean; // Boolean!
+    title: string; // String!
+    todoListId: string; // String!
+  }
+  TodoList: { // field return type
+    id: string; // String!
+    isLocked: boolean; // Boolean!
+    title: string | null; // String
+    todoItems: Array<NexusGenRootTypes['TodoItem'] | null>; // [TodoItem]!
+    workspaceId: string; // String!
   }
   User: { // field return type
     id: string | null; // String
   }
+  Workspace: { // field return type
+    id: string; // String!
+    isShared: boolean; // Boolean!
+    ownerId: string; // String!
+    title: string; // String!
+    todoLists: Array<NexusGenRootTypes['TodoList'] | null>; // [TodoList]!
+  }
 }
 
 export interface NexusGenFieldTypeNames {
-  Post: { // field return type name
-    body: 'String'
-    id: 'Int'
-    published: 'Boolean'
-    title: 'String'
+  Mutation: { // field return type name
+    createUser: 'User'
+    createWorkspace: 'Workspace'
   }
   Query: { // field return type name
-    hello: 'String'
-    posts: 'Post'
     user: 'User'
     users: 'User'
+  }
+  TodoItem: { // field return type name
+    cost: 'Float'
+    description: 'String'
+    id: 'String'
+    isCompleted: 'Boolean'
+    title: 'String'
+    todoListId: 'String'
+  }
+  TodoList: { // field return type name
+    id: 'String'
+    isLocked: 'Boolean'
+    title: 'String'
+    todoItems: 'TodoItem'
+    workspaceId: 'String'
   }
   User: { // field return type name
     id: 'String'
   }
+  Workspace: { // field return type name
+    id: 'String'
+    isShared: 'Boolean'
+    ownerId: 'String'
+    title: 'String'
+    todoLists: 'TodoList'
+  }
 }
 
 export interface NexusGenArgTypes {
-  Query: {
-    hello: { // args
-      name?: string | null; // String
+  Mutation: {
+    createWorkspace: { // args
+      title: string; // String!
     }
+  }
+  Query: {
     user: { // args
-      id?: string | null; // String
+      id: string; // String!
     }
   }
 }
@@ -128,7 +181,7 @@ export type NexusGenFeaturesConfig = {
 }
 
 export interface NexusGenTypes {
-  context: any;
+  context: Context;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
   inputTypeShapes: NexusGenInputs & NexusGenEnums & NexusGenScalars;
