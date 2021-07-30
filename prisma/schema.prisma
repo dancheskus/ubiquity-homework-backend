@@ -4,7 +4,8 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialActions"]
 }
 
 model TodoList {
@@ -12,7 +13,7 @@ model TodoList {
   title       String?
   isLocked    Boolean    @default(false)
   todoItems   TodoItem[]
-  workspace   Workspace  @relation(fields: [workspaceId], references: [id])
+  workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   workspaceId String     @db.Uuid
 }
 
@@ -22,7 +23,7 @@ model TodoItem {
   description String?
   cost        Float?
   isCompleted Boolean  @default(false)
-  todoList    TodoList @relation(fields: [todoListId], references: [id])
+  todoList    TodoList @relation(fields: [todoListId], references: [id], onDelete: Cascade)
   todoListId  String   @db.Uuid
 }
 

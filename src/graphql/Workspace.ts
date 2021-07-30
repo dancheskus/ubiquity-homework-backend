@@ -21,3 +21,9 @@ export const CreateWorkspaceMutation = mutationField('createWorkspace', {
   args: { title: nonNull('String') },
   resolve: (_, { title }, { currentUserId }) => prisma.workspace.create({ data: { title, ownerId: currentUserId } }),
 })
+
+export const DeleteWorkspaceMutation = mutationField('deleteWorkspace', {
+  type: 'Workspace',
+  args: { id: nonNull('String') },
+  resolve: (_, { id }) => prisma.workspace.delete({ where: { id } }),
+})

@@ -3,8 +3,12 @@
 
 
 type Mutation {
+  createTodoList(title: String, workspaceId: String!): TodoList
   createUser: User
   createWorkspace(title: String!): Workspace
+  deleteTodoList(id: String!): TodoList
+  deleteWorkspace(id: String!): Workspace
+  updateTodoList(id: String!, isLocked: Boolean, title: String): TodoList
 }
 
 type Query {

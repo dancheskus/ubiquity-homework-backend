@@ -67,8 +67,12 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
+    createTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
     createUser: NexusGenRootTypes['User'] | null; // User
     createWorkspace: NexusGenRootTypes['Workspace'] | null; // Workspace
+    deleteTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
+    deleteWorkspace: NexusGenRootTypes['Workspace'] | null; // Workspace
+    updateTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
   }
   Query: { // field return type
     user: NexusGenRootTypes['User'] | null; // User
@@ -103,8 +107,12 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
+    createTodoList: 'TodoList'
     createUser: 'User'
     createWorkspace: 'Workspace'
+    deleteTodoList: 'TodoList'
+    deleteWorkspace: 'Workspace'
+    updateTodoList: 'TodoList'
   }
   Query: { // field return type name
     user: 'User'
@@ -139,8 +147,23 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createTodoList: { // args
+      title?: string | null; // String
+      workspaceId: string; // String!
+    }
     createWorkspace: { // args
       title: string; // String!
+    }
+    deleteTodoList: { // args
+      id: string; // String!
+    }
+    deleteWorkspace: { // args
+      id: string; // String!
+    }
+    updateTodoList: { // args
+      id: string; // String!
+      isLocked?: boolean | null; // Boolean
+      title?: string | null; // String
     }
   }
   Query: {
