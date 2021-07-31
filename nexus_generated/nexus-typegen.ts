@@ -68,9 +68,9 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createTodoItem: NexusGenRootTypes['TodoItem'] | null; // TodoItem
-    createTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
-    createUser: NexusGenRootTypes['User'] | null; // User
-    createWorkspace: NexusGenRootTypes['Workspace'] | null; // Workspace
+    createTodoList: NexusGenRootTypes['TodoList']; // TodoList!
+    createUser: NexusGenRootTypes['User']; // User!
+    createWorkspace: NexusGenRootTypes['Workspace']; // Workspace!
     deleteTodoItem: NexusGenRootTypes['TodoItem'] | null; // TodoItem
     deleteTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
     deleteWorkspace: NexusGenRootTypes['Workspace'] | null; // Workspace
@@ -79,6 +79,7 @@ export interface NexusGenFieldTypes {
     updateWorkspace: NexusGenRootTypes['Workspace'] | null; // Workspace
   }
   Query: { // field return type
+    todoLists: NexusGenRootTypes['TodoList'][]; // [TodoList!]!
     user: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
@@ -99,14 +100,14 @@ export interface NexusGenFieldTypes {
   }
   User: { // field return type
     id: string | null; // String
-    workspaces: Array<NexusGenRootTypes['Workspace'] | null>; // [Workspace]!
+    workspaces: NexusGenRootTypes['Workspace'][]; // [Workspace!]!
   }
   Workspace: { // field return type
     id: string; // String!
     isShared: boolean; // Boolean!
     ownerId: string; // String!
     title: string; // String!
-    todoLists: Array<NexusGenRootTypes['TodoList'] | null>; // [TodoList]!
+    todoLists: NexusGenRootTypes['TodoList'][]; // [TodoList!]!
   }
 }
 
@@ -124,6 +125,7 @@ export interface NexusGenFieldTypeNames {
     updateWorkspace: 'Workspace'
   }
   Query: { // field return type name
+    todoLists: 'TodoList'
     user: 'User'
     users: 'User'
   }
@@ -198,6 +200,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    todoLists: { // args
+      workspaceId: string; // String!
+    }
     user: { // args
       id: string; // String!
     }

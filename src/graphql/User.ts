@@ -7,7 +7,7 @@ export const User = objectType({
   definition: t => {
     t.string('id')
     t.nonNull.list.field('workspaces', {
-      type: 'Workspace',
+      type: nonNull('Workspace'),
       resolve: ({ id }) => prisma.workspace.findMany({ where: { ownerId: id ?? undefined } }),
     })
   },
@@ -25,6 +25,6 @@ export const UsersQuery = queryField('users', {
 })
 
 export const CreateUserMutation = mutationField('createUser', {
-  type: 'User',
+  type: nonNull('User'),
   resolve: (_, __, { currentUserId }) => prisma.user.create({ data: { id: currentUserId } }),
 })

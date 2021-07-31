@@ -1,4 +1,4 @@
-import { mutationField, nonNull, objectType } from 'nexus'
+import { list, mutationField, nonNull, objectType, queryField } from 'nexus'
 
 import { prisma } from '../prismaSetup'
 
@@ -16,8 +16,14 @@ export const TodoList = objectType({
   },
 })
 
+export const GetTodoListsByWorkspaceQuery = queryField('todoLists', {
+  type: nonNull(list(nonNull('TodoList'))),
+  args: { workspaceId: nonNull('String') },
+  resolve: (_, { workspaceId }) => prisma.todoList.findMany({ where: { workspaceId } }),
+})
+
 export const CreateTodoListMutation = mutationField('createTodoList', {
-  type: 'TodoList',
+  type: nonNull('TodoList'),
   args: { title: 'String', workspaceId: nonNull('String') },
   resolve: (_, { title, workspaceId }) => prisma.todoList.create({ data: { title, workspaceId } }),
 })

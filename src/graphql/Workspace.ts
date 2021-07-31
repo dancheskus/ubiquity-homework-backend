@@ -10,14 +10,14 @@ export const Workspace = objectType({
     t.nonNull.boolean('isShared')
     t.nonNull.string('ownerId')
     t.nonNull.list.field('todoLists', {
-      type: 'TodoList',
+      type: nonNull('TodoList'),
       resolve: ({ id }) => prisma.todoList.findMany({ where: { workspaceId: id } }),
     })
   },
 })
 
 export const CreateWorkspaceMutation = mutationField('createWorkspace', {
-  type: 'Workspace',
+  type: nonNull('Workspace'),
   args: { title: nonNull('String') },
   resolve: (_, { title }, { currentUserId }) => prisma.workspace.create({ data: { title, ownerId: currentUserId } }),
 })
