@@ -99,6 +99,7 @@ export interface NexusGenFieldTypes {
   }
   User: { // field return type
     id: string | null; // String
+    workspaces: Array<NexusGenRootTypes['Workspace'] | null>; // [Workspace]!
   }
   Workspace: { // field return type
     id: string; // String!
@@ -143,6 +144,7 @@ export interface NexusGenFieldTypeNames {
   }
   User: { // field return type name
     id: 'String'
+    workspaces: 'Workspace'
   }
   Workspace: { // field return type name
     id: 'String'

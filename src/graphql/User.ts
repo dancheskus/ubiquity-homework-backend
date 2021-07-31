@@ -4,7 +4,13 @@ import { prisma } from '../prismaSetup'
 
 export const User = objectType({
   name: 'User',
-  definition: t => t.string('id'),
+  definition: t => {
+    t.string('id')
+    t.nonNull.list.field('workspaces', {
+      type: 'Workspace',
+      resolve: ({ id }) => prisma.workspace.findMany({ where: { ownerId: id ?? undefined } }),
+    })
+  },
 })
 
 export const UserQuery = queryField('user', {

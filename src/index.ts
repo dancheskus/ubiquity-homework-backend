@@ -6,4 +6,4 @@ server.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`)
 })
 
-console.log(uuidv4())
+// console.log(uuidv4())

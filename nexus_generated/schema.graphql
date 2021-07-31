@@ -39,6 +39,7 @@ type TodoList {
 
 type User {
   id: String
+  workspaces: [Workspace]!
 }
 
 type Workspace {
