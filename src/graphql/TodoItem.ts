@@ -36,7 +36,7 @@ export const UpdateTodoItemMutation = mutationField('updateTodoItem', {
       data: {
         isCompleted: isCompleted ?? undefined,
         title: title ?? undefined,
-        description: description ?? undefined,
+        description: description === null ? null : description ?? undefined,
         cost: cost ?? undefined,
       },
     }),
