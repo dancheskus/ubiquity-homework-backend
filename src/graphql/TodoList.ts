@@ -1,3 +1,4 @@
+import { ApolloError } from 'apollo-server'
 import { list, mutationField, nonNull, objectType, queryField } from 'nexus'
 
 import { prisma } from '../prismaSetup'
@@ -20,6 +21,17 @@ export const GetTodoListsByWorkspaceQuery = queryField('todoLists', {
   type: nonNull(list(nonNull('TodoList'))),
   args: { workspaceId: nonNull('String') },
   resolve: (_, { workspaceId }) => prisma.todoList.findMany({ where: { workspaceId } }),
+})
+
+export const GetTodoListByIdQuery = queryField('todoList', {
+  type: nonNull('TodoList'),
+  args: { id: nonNull('String') },
+  resolve: async (_, { id }) => {
+    const todoList = await prisma.todoList.findUnique({ where: { id } })
+    if (!todoList) throw new ApolloError('Todo list not found')
+
+    return todoList
+  },
 })
 
 export const CreateTodoListMutation = mutationField('createTodoList', {
