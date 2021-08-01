@@ -10,7 +10,7 @@ export const TodoList = objectType({
     t.nonNull.boolean('isLocked')
     t.nonNull.string('workspaceId')
     t.nonNull.list.field('todoItems', {
-      type: 'TodoItem',
+      type: nonNull('TodoItem'),
       resolve: ({ id }) => prisma.todoItem.findMany({ where: { todoListId: id } }),
     })
   },

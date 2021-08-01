@@ -95,7 +95,7 @@ export interface NexusGenFieldTypes {
     id: string; // String!
     isLocked: boolean; // Boolean!
     title: string | null; // String
-    todoItems: Array<NexusGenRootTypes['TodoItem'] | null>; // [TodoItem]!
+    todoItems: NexusGenRootTypes['TodoItem'][]; // [TodoItem!]!
     workspaceId: string; // String!
   }
   User: { // field return type

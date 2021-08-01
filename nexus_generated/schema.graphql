@@ -34,7 +34,7 @@ type TodoList {
   id: String!
   isLocked: Boolean!
   title: String
-  todoItems: [TodoItem]!
+  todoItems: [TodoItem!]!
   workspaceId: String!
 }
 
