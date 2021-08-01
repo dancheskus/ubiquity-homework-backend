@@ -1,4 +1,5 @@
-import { mutationField, nonNull, objectType } from 'nexus'
+import { ApolloError } from 'apollo-server'
+import { mutationField, nonNull, objectType, queryField } from 'nexus'
 
 import { prisma } from '../prismaSetup'
 
@@ -14,6 +15,16 @@ export const Workspace = objectType({
       resolve: ({ id }) => prisma.todoList.findMany({ where: { workspaceId: id } }),
     })
   },
+})
+
+export const GetWorkspaceByIdQuery = queryField('getWorkspace', {
+  type: nonNull('Workspace'),
+  args: { id: nonNull('String') },
+  resolve: (_, { id }) =>
+    prisma.workspace.findUnique({ where: { id } }).then(workspace => {
+      if (!workspace) throw new ApolloError('Workspace not found')
+      return workspace
+    }),
 })
 
 export const CreateWorkspaceMutation = mutationField('createWorkspace', {

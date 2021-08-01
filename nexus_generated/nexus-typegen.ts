@@ -79,6 +79,7 @@ export interface NexusGenFieldTypes {
     updateWorkspace: NexusGenRootTypes['Workspace'] | null; // Workspace
   }
   Query: { // field return type
+    getWorkspace: NexusGenRootTypes['Workspace']; // Workspace!
     todoList: NexusGenRootTypes['TodoList']; // TodoList!
     todoLists: NexusGenRootTypes['TodoList'][]; // [TodoList!]!
     user: NexusGenRootTypes['User'] | null; // User
@@ -126,6 +127,7 @@ export interface NexusGenFieldTypeNames {
     updateWorkspace: 'Workspace'
   }
   Query: { // field return type name
+    getWorkspace: 'Workspace'
     todoList: 'TodoList'
     todoLists: 'TodoList'
     user: 'User'
@@ -202,6 +204,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    getWorkspace: { // args
+      id: string; // String!
+    }
     todoList: { // args
       id: string; // String!
     }
