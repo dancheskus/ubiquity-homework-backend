@@ -88,7 +88,9 @@ export interface NexusGenFieldTypes {
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
   Subscription: { // field return type
+    createTodoItem: NexusGenRootTypes['TodoList'] | null; // TodoList
     createTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
+    deleteTodoItem: NexusGenRootTypes['TodoList'] | null; // TodoList
     deleteTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
     updateTodoItem: NexusGenRootTypes['TodoItem'] | null; // TodoItem
     updateTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
@@ -143,7 +145,9 @@ export interface NexusGenFieldTypeNames {
     users: 'User'
   }
   Subscription: { // field return type name
+    createTodoItem: 'TodoList'
     createTodoList: 'TodoList'
+    deleteTodoItem: 'TodoList'
     deleteTodoList: 'TodoList'
     updateTodoItem: 'TodoItem'
     updateTodoList: 'TodoList'
@@ -193,6 +197,7 @@ export interface NexusGenArgTypes {
     }
     deleteTodoItem: { // args
       id: string; // String!
+      todoListId: string; // String!
     }
     deleteTodoList: { // args
       todoListId: string; // String!
@@ -237,8 +242,14 @@ export interface NexusGenArgTypes {
     }
   }
   Subscription: {
+    createTodoItem: { // args
+      todoListId: string; // String!
+    }
     createTodoList: { // args
       workspaceId: string; // String!
+    }
+    deleteTodoItem: { // args
+      todoListId: string; // String!
     }
     deleteTodoList: { // args
       workspaceId: string; // String!

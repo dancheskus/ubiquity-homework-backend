@@ -1,4 +1,4 @@
-import { TodoItem as TodoItemType } from '@prisma/client'
+import { TodoItem as TodoItemType, TodoList as TodoListType } from '@prisma/client'
 import { mutationField, nonNull, objectType, queryField, subscriptionField } from 'nexus'
 
 import { prisma } from '../prismaSetup'
@@ -16,6 +16,10 @@ export const TodoItem = objectType({
   },
 })
 
+const TODOITEM_UPDATED = 'TODOITEM_UPDATED'
+const TODOITEM_CREATED = 'TODOITEM_CREATED'
+const TODOITEM_DELETED = 'TODOITEM_DELETED'
+
 export const GetTodoItemByIdQuery = queryField('todoItem', {
   type: 'TodoItem',
   args: { id: nonNull('String') },
@@ -25,17 +29,40 @@ export const GetTodoItemByIdQuery = queryField('todoItem', {
 export const CreateTodoItemMutation = mutationField('createTodoItem', {
   type: 'TodoItem',
   args: { title: nonNull('String'), todoListId: nonNull('String'), description: 'String', cost: 'Int' },
-  resolve: (_, { title, todoListId, cost, description }) =>
-    prisma.todoItem.create({ data: { title, todoListId, cost, description } }),
+  resolve: (_, { title, todoListId, cost, description }) => {
+    const createdTodoItem = prisma.todoItem.create({ data: { title, todoListId, cost, description } })
+    const updatedTodoList = prisma.todoList.findUnique({ where: { id: todoListId } })
+    pubsub.publish(`${TODOITEM_CREATED}-${todoListId}`, updatedTodoList)
+
+    return createdTodoItem
+  },
+})
+
+export const TodoItemCreatedSubscription = subscriptionField('createTodoItem', {
+  type: 'TodoList',
+  args: { todoListId: nonNull('String') },
+  subscribe: (_, { todoListId }) => pubsub.asyncIterator(`${TODOITEM_CREATED}-${todoListId}`),
+  resolve: (eventData: TodoListType) => eventData,
 })
 
 export const DeleteTodoItemMutation = mutationField('deleteTodoItem', {
   type: 'TodoItem',
-  args: { id: nonNull('String') },
-  resolve: (_, { id }) => prisma.todoItem.delete({ where: { id } }),
+  args: { id: nonNull('String'), todoListId: nonNull('String') },
+  resolve: (_, { id, todoListId }) => {
+    const deletedTodoItem = prisma.todoItem.delete({ where: { id } })
+    const updatedTodoList = prisma.todoList.findUnique({ where: { id: todoListId } })
+    pubsub.publish(`${TODOITEM_DELETED}-${todoListId}`, updatedTodoList)
+
+    return deletedTodoItem
+  },
 })
 
-const TODOITEM_UPDATED = 'TODOITEM_UPDATED'
+export const TodoItemDeletedSubscription = subscriptionField('deleteTodoItem', {
+  type: 'TodoList',
+  args: { todoListId: nonNull('String') },
+  subscribe: (_, { todoListId }) => pubsub.asyncIterator(`${TODOITEM_DELETED}-${todoListId}`),
+  resolve: (eventData: TodoListType) => eventData,
+})
 
 export const UpdateTodoItemMutation = mutationField('updateTodoItem', {
   type: 'TodoItem',
