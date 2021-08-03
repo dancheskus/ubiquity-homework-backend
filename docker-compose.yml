@@ -1,11 +1,20 @@
 services:
-  db:
-    image: "postgres:12"
+  api:
+    container_name: todo_api
     ports:
-      - "5432:5432"
+      - 4000:4000
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - .:/app
+      - /app/node_modules
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=mydb
+      - CHOKIDAR_USEPOLLING=true
+
+  db:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mydb
+    ports:
+      - 5432:5432      
