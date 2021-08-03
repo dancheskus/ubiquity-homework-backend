@@ -30,6 +30,7 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
   Mutation: {};
   Query: {};
+  Subscription: {};
   TodoItem: { // root type
     cost?: number | null; // Int
     description?: string | null; // String
@@ -85,6 +86,9 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
+  Subscription: { // field return type
+    truths: boolean | null; // Boolean
+  }
   TodoItem: { // field return type
     cost: number | null; // Int
     description: string | null; // String
@@ -132,6 +136,9 @@ export interface NexusGenFieldTypeNames {
     todoLists: 'TodoList'
     user: 'User'
     users: 'User'
+  }
+  Subscription: { // field return type name
+    truths: 'Boolean'
   }
   TodoItem: { // field return type name
     cost: 'Int'

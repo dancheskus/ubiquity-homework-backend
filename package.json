@@ -25,9 +25,12 @@
   },
   "dependencies": {
     "@prisma/client": "2.28.0",
-    "apollo-server": "^3.0.2",
+    "apollo-server-express": "^3.1.2",
+    "express": "^4.17.1",
     "graphql": "^15.5.1",
+    "graphql-subscriptions": "^1.2.1",
     "nexus": "^1.1.0",
-    "prisma": "2.28.0"
+    "prisma": "2.28.0",
+    "subscriptions-transport-ws": "^0.9.19"
   }
 }

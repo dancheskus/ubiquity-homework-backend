@@ -23,6 +23,10 @@ type Query {
   users: [User!]!
 }
 
+type Subscription {
+  truths: Boolean
+}
+
 type TodoItem {
   cost: Int
   description: String
