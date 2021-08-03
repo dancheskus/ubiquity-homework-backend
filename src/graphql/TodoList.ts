@@ -38,7 +38,7 @@ export const GetTodoListByIdQuery = queryField('todoList', {
 
 const TODOLIST_CREATED = 'TODOLIST_CREATED'
 const TODOLIST_DELETED = 'TODOLIST_DELETED'
-const TODOLIST_UPDATED = 'TODOLIST_UPDATED'
+export const TODOLIST_UPDATED = 'TODOLIST_UPDATED'
 
 export const CreateTodoListMutation = mutationField('createTodoList', {
   type: nonNull('TodoList'),

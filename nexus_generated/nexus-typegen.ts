@@ -88,7 +88,6 @@ export interface NexusGenFieldTypes {
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
   Subscription: { // field return type
-    createTodoItem: NexusGenRootTypes['TodoList'] | null; // TodoList
     createTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
     deleteTodoItem: NexusGenRootTypes['TodoList'] | null; // TodoList
     deleteTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
@@ -145,7 +144,6 @@ export interface NexusGenFieldTypeNames {
     users: 'User'
   }
   Subscription: { // field return type name
-    createTodoItem: 'TodoList'
     createTodoList: 'TodoList'
     deleteTodoItem: 'TodoList'
     deleteTodoList: 'TodoList'
@@ -242,9 +240,6 @@ export interface NexusGenArgTypes {
     }
   }
   Subscription: {
-    createTodoItem: { // args
-      todoListId: string; // String!
-    }
     createTodoList: { // args
       workspaceId: string; // String!
     }

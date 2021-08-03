@@ -25,7 +25,6 @@ type Query {
 }
 
 type Subscription {
-  createTodoItem(todoListId: String!): TodoList
   createTodoList(workspaceId: String!): TodoList
   deleteTodoItem(todoListId: String!): TodoList
   deleteTodoList(workspaceId: String!): TodoList
