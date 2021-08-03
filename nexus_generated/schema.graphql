@@ -16,7 +16,7 @@ type Mutation {
 }
 
 type Query {
-  getWorkspace(id: String!): Workspace!
+  getWorkspace(id: String!): Workspace
   todoList(id: String!): TodoList!
   todoLists(workspaceId: String!): [TodoList!]!
   user(id: String!): User

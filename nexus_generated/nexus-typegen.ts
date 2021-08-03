@@ -79,7 +79,7 @@ export interface NexusGenFieldTypes {
     updateWorkspace: NexusGenRootTypes['Workspace'] | null; // Workspace
   }
   Query: { // field return type
-    getWorkspace: NexusGenRootTypes['Workspace']; // Workspace!
+    getWorkspace: NexusGenRootTypes['Workspace'] | null; // Workspace
     todoList: NexusGenRootTypes['TodoList']; // TodoList!
     todoLists: NexusGenRootTypes['TodoList'][]; // [TodoList!]!
     user: NexusGenRootTypes['User'] | null; // User

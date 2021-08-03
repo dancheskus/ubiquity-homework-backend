@@ -18,13 +18,9 @@ export const Workspace = objectType({
 })
 
 export const GetWorkspaceByIdQuery = queryField('getWorkspace', {
-  type: nonNull('Workspace'),
+  type: 'Workspace',
   args: { id: nonNull('String') },
-  resolve: (_, { id }) =>
-    prisma.workspace.findUnique({ where: { id } }).then(workspace => {
-      if (!workspace) throw new ApolloError('Workspace not found')
-      return workspace
-    }),
+  resolve: (_, { id }) => prisma.workspace.findUnique({ where: { id } }),
 })
 
 export const CreateWorkspaceMutation = mutationField('createWorkspace', {
