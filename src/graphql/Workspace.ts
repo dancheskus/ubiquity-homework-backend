@@ -1,4 +1,3 @@
-import { ApolloError } from 'apollo-server'
 import { mutationField, nonNull, objectType, queryField } from 'nexus'
 
 import { prisma } from '../prismaSetup'
