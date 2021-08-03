@@ -20,3 +20,14 @@ services:
       - /app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
+    labels:
+      - "traefik.http.routers.todo_api.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.todo_api.entrypoints=websecure"
+      - "traefik.http.routers.todo_api.tls.certresolver=myresolver"
+      - "traefik.http.routers.todo_api.tls.domains[0].main=${DOMAIN}"
+      - "traefik.http.routers.todo_api.tls.domains[0].sans=www.${DOMAIN}"
+
+networks:
+  default:
+    external: 
+      name: traefik      
