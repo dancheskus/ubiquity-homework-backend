@@ -88,6 +88,7 @@ export interface NexusGenFieldTypes {
   }
   Subscription: { // field return type
     createTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
+    deleteTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
   }
   TodoItem: { // field return type
     cost: number | null; // Int
@@ -139,6 +140,7 @@ export interface NexusGenFieldTypeNames {
   }
   Subscription: { // field return type name
     createTodoList: 'TodoList'
+    deleteTodoList: 'TodoList'
   }
   TodoItem: { // field return type name
     cost: 'Int'
@@ -187,7 +189,8 @@ export interface NexusGenArgTypes {
       id: string; // String!
     }
     deleteTodoList: { // args
-      id: string; // String!
+      todoListId: string; // String!
+      workspaceId: string; // String!
     }
     deleteWorkspace: { // args
       id: string; // String!
@@ -226,6 +229,9 @@ export interface NexusGenArgTypes {
   }
   Subscription: {
     createTodoList: { // args
+      workspaceId: string; // String!
+    }
+    deleteTodoList: { // args
       workspaceId: string; // String!
     }
   }

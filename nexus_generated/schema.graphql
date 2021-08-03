@@ -8,7 +8,7 @@ type Mutation {
   createUser: User!
   createWorkspace(title: String!): Workspace!
   deleteTodoItem(id: String!): TodoItem
-  deleteTodoList(id: String!): TodoList
+  deleteTodoList(todoListId: String!, workspaceId: String!): TodoList
   deleteWorkspace(id: String!): Workspace
   updateTodoItem(cost: Int, description: String, id: String!, isCompleted: Boolean, title: String): TodoItem
   updateTodoList(id: String!, isLocked: Boolean, title: String): TodoList
@@ -25,6 +25,7 @@ type Query {
 
 type Subscription {
   createTodoList(workspaceId: String!): TodoList
+  deleteTodoList(workspaceId: String!): TodoList
 }
 
 type TodoItem {
