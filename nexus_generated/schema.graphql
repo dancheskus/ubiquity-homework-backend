@@ -17,6 +17,7 @@ type Mutation {
 
 type Query {
   getWorkspace(id: String!): Workspace
+  todoItem(id: String!): TodoItem
   todoList(id: String!): TodoList!
   todoLists(workspaceId: String!): [TodoList!]!
   user(id: String!): User
@@ -26,6 +27,7 @@ type Query {
 type Subscription {
   createTodoList(workspaceId: String!): TodoList
   deleteTodoList(workspaceId: String!): TodoList
+  updateTodoItem(id: String!): TodoItem
 }
 
 type TodoItem {

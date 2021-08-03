@@ -1,6 +1,8 @@
-import { mutationField, nonNull, objectType } from 'nexus'
+import { TodoItem as TodoItemType } from '@prisma/client'
+import { mutationField, nonNull, objectType, queryField, subscriptionField } from 'nexus'
 
 import { prisma } from '../prismaSetup'
+import { pubsub } from '../pubsub'
 
 export const TodoItem = objectType({
   name: 'TodoItem',
@@ -12,6 +14,12 @@ export const TodoItem = objectType({
     t.nonNull.boolean('isCompleted')
     t.nonNull.string('todoListId')
   },
+})
+
+export const GetTodoItemByIdQuery = queryField('todoItem', {
+  type: 'TodoItem',
+  args: { id: nonNull('String') },
+  resolve: (_, { id }) => prisma.todoItem.findUnique({ where: { id } }),
 })
 
 export const CreateTodoItemMutation = mutationField('createTodoItem', {
@@ -27,11 +35,13 @@ export const DeleteTodoItemMutation = mutationField('deleteTodoItem', {
   resolve: (_, { id }) => prisma.todoItem.delete({ where: { id } }),
 })
 
+const TODOITEM_UPDATED = 'TODOITEM_UPDATED'
+
 export const UpdateTodoItemMutation = mutationField('updateTodoItem', {
   type: 'TodoItem',
   args: { id: nonNull('String'), isCompleted: 'Boolean', title: 'String', description: 'String', cost: 'Int' },
-  resolve: (_, { id, isCompleted, title, description, cost }) =>
-    prisma.todoItem.update({
+  resolve: (_, { id, isCompleted, title, description, cost }) => {
+    const updatedTodoItem = prisma.todoItem.update({
       where: { id },
       data: {
         isCompleted: isCompleted ?? undefined,
@@ -39,5 +49,16 @@ export const UpdateTodoItemMutation = mutationField('updateTodoItem', {
         description: description === null ? null : description ?? undefined,
         cost: cost ?? undefined,
       },
-    }),
+    })
+    pubsub.publish(`${TODOITEM_UPDATED}-${id}`, updatedTodoItem)
+
+    return updatedTodoItem
+  },
+})
+
+export const UpdateTodoItemSubscription = subscriptionField('updateTodoItem', {
+  type: 'TodoItem',
+  args: { id: nonNull('String') },
+  subscribe: (_, { id }) => pubsub.asyncIterator(`${TODOITEM_UPDATED}-${id}`),
+  resolve: (eventData: TodoItemType) => eventData,
 })
