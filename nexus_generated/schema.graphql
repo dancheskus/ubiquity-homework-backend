@@ -24,7 +24,7 @@ type Query {
 }
 
 type Subscription {
-  truths: Boolean
+  createTodoList(workspaceId: String!): TodoList
 }
 
 type TodoItem {

@@ -1,7 +1,9 @@
+import { TodoList as TodoListType } from '@prisma/client'
 import { ApolloError } from 'apollo-server-express'
-import { list, mutationField, nonNull, objectType, queryField } from 'nexus'
+import { list, mutationField, nonNull, objectType, queryField, subscriptionField } from 'nexus'
 
 import { prisma } from '../prismaSetup'
+import { pubsub } from '../pubsub'
 
 export const TodoList = objectType({
   name: 'TodoList',
@@ -34,10 +36,25 @@ export const GetTodoListByIdQuery = queryField('todoList', {
   },
 })
 
+const TODOLIST_CREATED = 'TODOLIST_CREATED'
+const TODOLIST_REMOVED = 'TODOLIST_CREATED'
+
 export const CreateTodoListMutation = mutationField('createTodoList', {
   type: nonNull('TodoList'),
   args: { title: 'String', workspaceId: nonNull('String') },
-  resolve: (_, { title, workspaceId }) => prisma.todoList.create({ data: { title, workspaceId } }),
+  resolve: (_, { title, workspaceId }) => {
+    const newTodoList = prisma.todoList.create({ data: { title, workspaceId } })
+    pubsub.publish(`${TODOLIST_CREATED}-${workspaceId}`, newTodoList)
+
+    return newTodoList
+  },
+})
+
+export const CreateTodoListSubscription = subscriptionField('createTodoList', {
+  type: 'TodoList',
+  args: { workspaceId: nonNull('String') },
+  subscribe: (_, { workspaceId }) => pubsub.asyncIterator(`${TODOLIST_CREATED}-${workspaceId}`),
+  resolve: (eventData: TodoListType) => eventData,
 })
 
 export const DeleteTodoListMutation = mutationField('deleteTodoList', {

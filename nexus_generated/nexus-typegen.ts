@@ -87,7 +87,7 @@ export interface NexusGenFieldTypes {
     users: NexusGenRootTypes['User'][]; // [User!]!
   }
   Subscription: { // field return type
-    truths: boolean | null; // Boolean
+    createTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
   }
   TodoItem: { // field return type
     cost: number | null; // Int
@@ -138,7 +138,7 @@ export interface NexusGenFieldTypeNames {
     users: 'User'
   }
   Subscription: { // field return type name
-    truths: 'Boolean'
+    createTodoList: 'TodoList'
   }
   TodoItem: { // field return type name
     cost: 'Int'
@@ -222,6 +222,11 @@ export interface NexusGenArgTypes {
     }
     user: { // args
       id: string; // String!
+    }
+  }
+  Subscription: {
+    createTodoList: { // args
+      workspaceId: string; // String!
     }
   }
 }

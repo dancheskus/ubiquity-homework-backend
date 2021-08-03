@@ -1,4 +1,4 @@
-import { mutationField, nonNull, objectType, queryField, subscriptionField } from 'nexus'
+import { mutationField, nonNull, objectType, queryField } from 'nexus'
 
 import { prisma } from '../prismaSetup'
 
@@ -25,7 +25,10 @@ export const GetWorkspaceByIdQuery = queryField('getWorkspace', {
 export const CreateWorkspaceMutation = mutationField('createWorkspace', {
   type: nonNull('Workspace'),
   args: { title: nonNull('String') },
-  resolve: (_, { title }, { currentUserId }) => prisma.workspace.create({ data: { title, ownerId: currentUserId } }),
+  resolve: (_, { title }, { currentUserId }) => {
+    const newWorkspace = prisma.workspace.create({ data: { title, ownerId: currentUserId } })
+    return newWorkspace
+  },
 })
 
 export const DeleteWorkspaceMutation = mutationField('deleteWorkspace', {
@@ -39,21 +42,4 @@ export const UpdateWorkspaceMutation = mutationField('updateWorkspace', {
   args: { id: nonNull('String'), isShared: 'Boolean', title: 'String' },
   resolve: (_, { id, isShared, title }) =>
     prisma.workspace.update({ where: { id }, data: { isShared: isShared ?? undefined, title: title ?? undefined } }),
-})
-
-export const SubscriptionField = subscriptionField('truths', {
-  type: 'Boolean',
-  subscribe() {
-    // eslint-disable-next-line func-names
-    return (async function* () {
-      while (true) {
-        // eslint-disable-next-line no-await-in-loop
-        await new Promise(res => setTimeout(res, 1000))
-        yield Math.random() > 0.5
-      }
-    })()
-  },
-  resolve(eventData: any) {
-    return eventData
-  },
 })
