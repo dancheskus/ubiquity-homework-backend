@@ -91,6 +91,7 @@ export interface NexusGenFieldTypes {
     createTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
     deleteTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
     updateTodoItem: NexusGenRootTypes['TodoItem'] | null; // TodoItem
+    updateTodoList: NexusGenRootTypes['TodoList'] | null; // TodoList
   }
   TodoItem: { // field return type
     cost: number | null; // Int
@@ -145,6 +146,7 @@ export interface NexusGenFieldTypeNames {
     createTodoList: 'TodoList'
     deleteTodoList: 'TodoList'
     updateTodoItem: 'TodoItem'
+    updateTodoList: 'TodoList'
   }
   TodoItem: { // field return type name
     cost: 'Int'
@@ -242,6 +244,9 @@ export interface NexusGenArgTypes {
       workspaceId: string; // String!
     }
     updateTodoItem: { // args
+      id: string; // String!
+    }
+    updateTodoList: { // args
       id: string; // String!
     }
   }

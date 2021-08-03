@@ -28,6 +28,7 @@ type Subscription {
   createTodoList(workspaceId: String!): TodoList
   deleteTodoList(workspaceId: String!): TodoList
   updateTodoItem(id: String!): TodoItem
+  updateTodoList(id: String!): TodoList
 }
 
 type TodoItem {

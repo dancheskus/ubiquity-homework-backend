@@ -38,6 +38,7 @@ export const GetTodoListByIdQuery = queryField('todoList', {
 
 const TODOLIST_CREATED = 'TODOLIST_CREATED'
 const TODOLIST_DELETED = 'TODOLIST_DELETED'
+const TODOLIST_UPDATED = 'TODOLIST_UPDATED'
 
 export const CreateTodoListMutation = mutationField('createTodoList', {
   type: nonNull('TodoList'),
@@ -78,6 +79,17 @@ export const DeleteTodoListSubscription = subscriptionField('deleteTodoList', {
 export const UpdateTodoListMutation = mutationField('updateTodoList', {
   type: 'TodoList',
   args: { id: nonNull('String'), isLocked: 'Boolean', title: 'String' },
-  resolve: (_, { id, isLocked, title }) =>
-    prisma.todoList.update({ where: { id }, data: { isLocked: isLocked ?? undefined, title } }),
+  resolve: (_, { id, isLocked, title }) => {
+    const updatedTodoList = prisma.todoList.update({ where: { id }, data: { isLocked: isLocked ?? undefined, title } })
+    pubsub.publish(`${TODOLIST_UPDATED}-${id}`, updatedTodoList)
+
+    return updatedTodoList
+  },
+})
+
+export const UpdateTodoListSubscription = subscriptionField('updateTodoList', {
+  type: 'TodoList',
+  args: { id: nonNull('String') },
+  subscribe: (_, { id }) => pubsub.asyncIterator(`${TODOLIST_UPDATED}-${id}`),
+  resolve: (eventData: TodoListType) => eventData,
 })
